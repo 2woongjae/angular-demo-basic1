@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UserService } from './user.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,16 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+  users = [];
+
+  constructor(private userService: UserService) {
+    this.userService.getUsers()
+    .then(data => {
+      this.users = data.json();
+    })
+    .catch(error => {
+      console.log(error);
+      this.users = [];
+    });
+  }
 }
